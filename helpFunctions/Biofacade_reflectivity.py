@@ -47,7 +47,7 @@ def transmission_multiple_interface(theta_i, n_s):
     transmission = 1.0
     theta_i_current = theta_i
     for i in range(0, n_interface):
-        theta_r = SnellRefraction(theta_i_current, n_s[0], n_s[i+1])
+        theta_r = SnellRefraction(theta_i_current, n_s[i], n_s[i+1])
         transmission = transmission * (1.0 - reflectivity_one_interface(theta_i_current, theta_r))
         if transmission < 1e-15:
             transmission = 0

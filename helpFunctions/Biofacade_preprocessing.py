@@ -160,7 +160,7 @@ def extracting_and_subsampling(station_name = "Marignane", dt = 0.1, azimuth = 0
     # PHOTO-CONVERSION
     # 1 W/m2 = 126.7 lux
     # 1 lux = 0.0185 µmolPhoton/m2/s 
-    # 1 W/m2 = 126.7*0.0185 = 2.3495 µmolPhoton/m2/s 
+    # 1 W/m2 = 1 J/m2/s = 126.7*0.0185 = 2.3495 µmolPhoton/m2/s 
     # OR 1 lux = 0.0185 µmolPhotonPAR/m2/s  https://hortione.com/2021/08/lux-to-ppfd-convertor-ppfd-to-lux/
     # The above is more coherent
     # Rendement PAR
@@ -192,8 +192,8 @@ def extracting_and_subsampling(station_name = "Marignane", dt = 0.1, azimuth = 0
     
     # %%% Meteo modulated values %%% #
     # Year selection
-    transient_day = 7
-    selected_years = np.arange(2013, 2022+1, 1)
+    # transient_day = 7
+    selected_years = np.arange(2023, 2023+1, 1)
     data_meteo_1year = data_meteo[
         ((data_meteo['year'] == selected_years[0]-1) & (data_meteo['julianDay'] >= 365 - transient_day)) 
         | ((data_meteo['year'] >= selected_years[0]) & (data_meteo['year'] <= selected_years[-1])) 

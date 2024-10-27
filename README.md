@@ -13,10 +13,53 @@ It has been tested successfully on October 2024.
 
 The first one is hosted in the _Temperature_and_light_only_ folder. This code predicts the temperature of the biofaçade module reservoir and the volume-averaged illumination within it. The second one is hosted in the repository's root folder (up there ↑). In addition to predicting temperature, it also predicts microalgae production and quality (pigment content). Both are described separately below.
 
+## Temperature, light & cell growth
+
+It is supplied with data for a South-oriented module located in Marseille. The input dataset covers 2023. _illuminations_vector_Marignane_dt_0.5_azi_0.csv_ contains incident illumination data. It has been generated using [Recommended Practice for the Calculation of Daylight Availability.](https://doi.org/10.1080/00994480.1984.10748791) (1984). _Journal of the Illuminating Engineering Society_, 13(4), implemented in _helpFunctions/Solar_Time.py_. _meteo_vector_Marignane_dt_0.5_azi_0.csv_ contains the relevant weather data extract from [Météo France database](https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=90&id_rubrique=32) (see below).
+
+__Step 1: execute the code__
+
+Run _Biofacade_model_explicit.py_ (it will get the data from the _data_ folder) and generate two outputs:
+- _results_vector_extended_Marignane_dt_0.5_azi_0.npy_ contains the outputs for all the time steps (several MB). For the exact structure of the data, please have a look at the lines 575 to 610 of the file _Biofacade_model_explicit.py_
+- _results_vector_Marignane_dt_0.5_azi_0.npy_ contains agglomerated results/indicators, on per year basis. For the exact structure of the data, please have a look at the lines 678 to 721 of the file _Biofacade_model_explicit.py_ (or the lines 777 to 796 of the same file)
+
+The design parameters describing the biofaçade module are the _x_, _y_, and _z_ (the one containing biological parameters) vectors of the function master function (_biofacade()_). They are structured as follows:
+
+1. x vector
+    - 0 - sobol mode: 0 - disabled, 1 - enabled
+    - 1 - emissivity of the building indoor: [0, 1]
+    - 2 - emissivity of the microalgae culture: [0, 1]
+    - 3 - emissivity of the surrounding buildings: [0, 1]
+
+2. y vector
+    - 0 - nb. of front glazing: 1 (single glazing), 2 (double glazing), or more
+    - 1 - film_mode: 0 - no film, 1 - greenhouse, 2 - heat management
+    - 2 - culture concentration, as transmittend fraction of green light: [0, 1]
+    - 3 - culture compartment thickness (m), >0
+    - 4 - sparged gas from outside or inside: 0 - temperature from the outdoor, 1 - temperature from the building
+    - 5 - sparged gas variable temperature (K): 0 - no change over the year, 1 - +60°C in winter
+    - 6 - choice of strain: 0 - Chlorella vulgaris (mesophyllic), 1 - Chlorella sorokiniana (thermophyllic)
+    - 7 - azimuth (°), basically, biofacade orientation: [-90, 90]
+
+3. z vector
+    - 0 - fraction of the reservoir volume replaced when the transmitted light reaches the limit value: [0, 1[
+    - 1 - maintenance mode. 0 - null, 1 - constant light respiration, 2 - constant dark respiration, 3 - time varying
+    - 2 - temperature mode. 0 - no temperature dependency, 1 - biological processes are modulated by temperature
+    - 3 - retroaction of the pigment content on cross section. 0 - variation but no retroaction on cross section, 1 - variation and retroaction
+    - 4 - cross sections wavelength band dependency. 0 - no, 1 - yes
+
+__Step 2: post-process__
+
+You can plot the data with your favorite framework/software.
+
+![Image not found](./results/Biomass_Lutein.png?raw=true)
+![Image not found](./results/Temp_Metabo.png?raw=true)
+
+
 
 ## Temperature and light only
 
-It is supplied with data for a South-oriented module located in Marseille. The input dataset spans 2013 to 2022. _illuminations_vector_Marignane_dt_0.5_azi_0.csv_ contains incident illumination data. It has been generated using [Recommended Practice for the Calculation of Daylight Availability.](https://doi.org/10.1080/00994480.1984.10748791) (1984). _Journal of the Illuminating Engineering Society_, 13(4), implemented in _helpFunctions/Solar_Time.py_. _meteo_vector_Marignane_dt_0.5_azi_0.csv_ contains the relevant weather data extract from [Météo France database](https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=90&id_rubrique=32) (see below).
+It is supplied with data for a South-oriented module located in Marseille. The input dataset spans 2013 to 2022. They have generated with the same abovementioned procedure (for a longer period).
 
 __Step 1: execute the code__
 
@@ -24,7 +67,7 @@ Run _Biofacade_model_explicit.py_ (it will get the data from the _data_ folder) 
 - _results_vector_extended_Marignane_dt_0.5_azi_0.npy_ contains the outputs for all the time steps (several MB). For the exact structure of the data, please have a look at the lines 408 to 432 of the file _Biofacade_model_explicit.py_
 - _results_vector_Marignane_dt_0.5_azi_0.npy_ contains agglomerated results/indicators, on per year basis. For the exact structure of the data, please have a look at the lines 491 to 546 of the file _Biofacade_model_explicit.py_ (or the lines 575 to 590 of the same file)
 
-The design parameters describing the biofaçade module are the _x_ and _y_ vector of the function master function (_biofacade()_). They are structured as follows:
+The design parameters describing the biofaçade module are the _x_ and _y_ vectors of the function master function (_biofacade()_). They are structured as follows:
 
 1. x vector
     - 0 - sobol mode: 0 - disabled, 1 - enabled
