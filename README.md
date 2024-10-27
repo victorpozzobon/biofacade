@@ -24,23 +24,23 @@ Run _Biofacade_model_explicit.py_ (it will get the data from the _data_ folder) 
 - _results_vector_extended_Marignane_dt_0.5_azi_0.npy_ contains the outputs for all the time steps (several MB). For the exact structure of the data, please have a look at the lines 408 to 432 of the file _Biofacade_model_explicit.py_
 - _results_vector_Marignane_dt_0.5_azi_0.npy_ contains agglomerated results/indicators, on per year basis. For the exact structure of the data, please have a look at the lines 491 to 546 of the file _Biofacade_model_explicit.py_ (or the lines 575 to 590 of the same file)
 
-The design parameters describing the biofaçade module are the _x_ and _y_ vector of the function master function (_biofacade()_). They are
+The design parameters describing the biofaçade module are the _x_ and _y_ vector of the function master function (_biofacade()_). They are structured as follows:
 
-x vector
-0 - sobol mode: 0 - disabled, 1 - enabled
-1 - emissivity of the building indoor: [0, 1]
-2 - emissivity of the microalgae culture: [0, 1]
-3 - emissivity of the surrounding buildings: [0, 1]
+1. x vector
+    - 0 - sobol mode: 0 - disabled, 1 - enabled
+    - 1 - emissivity of the building indoor: [0, 1]
+    - 2 - emissivity of the microalgae culture: [0, 1]
+    - 3 - emissivity of the surrounding buildings: [0, 1]
 
-y vector
-0 - nb. of front glazing: 1 (single glazing), 2 (double glazing), or more
-1 - film_mode: 0 - no film, 1 - greenhouse, 2 - heat management
-2 - culture concentration, as transmittend fraction of green light: [0, 1]
-3 - culture compartment thickness (m), >0
-4 - sparged gas from outside or inside: 0 - temperature from the outdoor, 1 - temperature from the building
-5 - sparged gas variable temperature (K): 0 - no change over the year, 1 - +60°C in winter
-6 - choice of strain: 0 - Chlorella vulgaris (mesophyllic), 1 - Chlorella sorokiniana (thermophyllic)
-7 - azimuth (°), basically, biofacade orientation: [-90, 90]
+2. y vector
+    - 0 - nb. of front glazing: 1 (single glazing), 2 (double glazing), or more
+    - 1 - film_mode: 0 - no film, 1 - greenhouse, 2 - heat management
+    - 2 - culture concentration, as transmittend fraction of green light: [0, 1]
+    - 3 - culture compartment thickness (m), >0
+    - 4 - sparged gas from outside or inside: 0 - temperature from the outdoor, 1 - temperature from the building
+    - 5 - sparged gas variable temperature (K): 0 - no change over the year, 1 - +60°C in winter
+    - 6 - choice of strain: 0 - Chlorella vulgaris (mesophyllic), 1 - Chlorella sorokiniana (thermophyllic)
+    - 7 - azimuth (°), basically, biofacade orientation: [-90, 90]
 
 
 __Step 2: post-process__
